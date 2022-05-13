@@ -15,7 +15,7 @@ const TextInputArea: FC<Props> = (props) => {
       <Input
         value={props.value}
         onChange={props.onChange}
-        onKeyDown={(e) => {
+        onKeyDown={(e: KeyboardEvent) => {
           if (e.key === "Enter") {
             props.onSubmit();
           }
