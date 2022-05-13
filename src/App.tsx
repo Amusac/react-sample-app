@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ChangeEvent, useState } from "react";
+import TextInputArea from "./components/TextInputArea";
+
+import MessageList from "./components/MessageList";
+import { Box, Stack, Typography } from "@mui/material";
+import Profile from "./components/Profile";
 
 function App() {
+  const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState<string[]>([]);
+
+  const onMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.target.value);
+  };
+
+  const onMessageSubmit = () => {
+    setMessageList((currentMessageList) => [...currentMessageList, message]);
+    setMessage("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Stack spacing={4}>
+      <Box>
+        <Typography variant="h4">チャット</Typography>
+        <MessageList messageList={messageList} />
+        <TextInputArea
+          value={message}
+          onChange={onMessageChange}
+          onSubmit={onMessageSubmit}
+        />
+      </Box>
+      <Box>
+        <Typography variant="h4">プロフィール</Typography>
+        <Profile />
+      </Box>
+    </Stack>
   );
 }
 
